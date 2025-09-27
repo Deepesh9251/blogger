@@ -3,25 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import { TfiWrite } from "react-icons/tfi";
 import { FaUser, FaBell, FaSearch, FaCog, FaSignOutAlt } from "react-icons/fa";
 
-export default function Header() {
+export default function Header({token}:{token :string}) {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const navigate = useNavigate();
 
     const handleSignOut = () => {
         localStorage.removeItem('authToken');
-        navigate('/signin');
+        navigate('/');
     };
-
+console.log(token)
     const handleWriteClick = () => {
         navigate('/write');
     };
-
+console.log(token)
     return (
-        <header className="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
-            <div className="max-w-6xl mx-auto px-4 py-3">
-                <div className="flex items-center justify-between">
-                    {/* Logo and Brand */}
-                    <div className="flex items-center space-x-4">
+        <div className= "    flex items-center justify-center   ">
+    
+                <div className="flex flex-row items-center  w-full  px-10 justify-between  py-2 rounded-lg" >
+                 
+                    <div className="flex items-center space-x-4  ">
                         <div 
                             className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
                             onClick={() => navigate('/')}
@@ -34,9 +34,9 @@ export default function Header() {
                             </h1>
                         </div>
                     </div>
-
+                
                     {/* Search Bar */}
-                    <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
+                    <div className="hidden md:flex items-center flex-1 max-w-lg mx-8 ">
                         <div className="relative w-full">
                             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                             <input
@@ -48,15 +48,16 @@ export default function Header() {
                     </div>
 
                     {/* Right Side Actions */}
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 ">
                         {/* Write Button */}
-                        <button
+                        {token== undefined || token.length==0 ? (<button className='px-4 py-2 text-xs bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold' onClick={()=>navigate("/signin")}>Signin</button>):(  <button
                             onClick={handleWriteClick}
                             className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md hover:shadow-lg"
                         >
                             <TfiWrite size={16} />
                             <span className="hidden sm:inline">Write</span>
-                        </button>
+                        </button>)}
+                      
 
                         {/* Notifications */}
                         <button className="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-full transition-colors duration-200">
@@ -124,7 +125,7 @@ export default function Header() {
                         />
                     </div>
                 </div>
-            </div>
-        </header>
+           
+        </div>
     );
 }
